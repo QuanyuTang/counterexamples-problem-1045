@@ -1,0 +1,855 @@
+\documentclass[11pt,letterpaper,reqno]{amsart}
+\usepackage{tikz}
+\usetikzlibrary{positioning, shapes.geometric, arrows.meta, calc, positioning}
+\usepackage{chngcntr}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
+\usepackage{listings}
+% \usepackage{xcolor}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{mathtools}
+\usetikzlibrary{calc, angles, quotes}
+\usepackage{longtable}
+\usepackage{mathtools}
+\usepackage{breqn}
+
+
+\lstdefinelanguage{Mathematica}{
+  morekeywords={
+    Module, If, Then, Else, Which, While, For, Do, Table, Return, Block, 
+    Eigenvalues, AdjacencyMatrix, Select, Total, Max, Abs, Plot, ListPlot, 
+    Import, Export, Solve, Simplify, Expand, Factor, Det, MatrixForm, NullSpace
+  },
+  sensitive=true,
+  morecomment=[l]{(*},
+  morestring=[b]",
+}
+
+\lstset{
+  language=Mathematica,
+  basicstyle=\ttfamily\small, 
+  keywordstyle=\color{blue}, 
+  commentstyle=\color{green!50!black}, 
+  stringstyle=\color{orange!80!black}, 
+  identifierstyle=\color{black}, 
+  numberstyle=\tiny\color{gray},
+  numbers=none,         
+  breaklines=true,      
+  breakatwhitespace=true,
+  frame=single,         
+  captionpos=b,         
+  showstringspaces=false,
+  columns=flexible,
+  escapeinside={(*@}{@*)} 
+}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{bbm}
+\usepackage{enumitem} 
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18} 
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{doi}
+\usepackage{float} 
+\addtolength{\hoffset}{-1.5cm}\addtolength{\textwidth}{3cm}
+\addtolength{\voffset}{-1cm}\addtolength{\textheight}{2cm}
+
+\usepackage{bookmark}
+\usepackage{hyperref}
+\hypersetup{pdfstartview={FitH}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\norm}[1]{\lVert #1 \rVert}
+\newcommand{\abs}[1]{| #1 |}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bw}{\mathbf{w}}
+\newcommand{\tr}{\text{tr}}
+\DeclareMathOperator{\rank}{rank}
+
+
+\usepackage[capitalise]{cleveref}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{ques}[thm]{Question}
+\newtheorem{prob}[thm]{Problem}
+\newtheorem{conj}[thm]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{exm}[thm]{Example}
+\newtheorem{remark}[thm]{Remark}
+\newtheorem{target}[thm]{Target}
+\newtheorem{defn}[thm]{Definition}
+\numberwithin{equation}{section}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\taufunc}{\tau}
+\newcommand{\omegap}{\omega}
+\newcommand{\ord}{\operatorname{ord}}
+\newcommand{\R}{\mathbb{R}}        % real numbers
+\newcommand{\E}{\mathbb{E}}        % expectation
+\newcommand{\Var}{\mathrm{Var}}    % variance
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\PP}{\mathbb{P}}     % probability
+\newcommand{\eps}{\varepsilon}     % epsilon
+\newcommand{\ind}{\mathbf{1}}      % indicator function
+\newcommand{\seq}[1]{\left(#1\right)} % sequence
+\DeclareMathOperator{\Lip}{Lip}
+\makeatother
+
+\newcommand{\scc}[1]{\textcolor{red}{\textbf{[SC: } #1\textbf{]}}}
+\newcommand{\adc}[1]{\textcolor{orange}{\textbf{[AD: } #1\textbf{]}}}
+\newcommand{\yd}[1]{\textcolor{blue}{\textbf{[YD: } #1\textbf{]}}}
+\newcommand{\qt}[1]{\textcolor{ForestGreen}{\textbf{[QT: } #1\textbf{]}}}
+
+\begin{document}
+
+\title{Another improved lower bound for even $n$}
+
+
+% \author[S.~Cambie]{Stijn Cambie}
+% \author[A.~Decadt]{Arne Decadt}
+% \author[Y.~Dong]{Yanni Dong}
+% \author[T.~Hu]{Tao Hu}
+% \author[Q.~Tang]{Quanyu Tang}
+
+
+
+
+% \address{}
+% \email{}
+
+
+
+
+% \begin{abstract}
+% \end{abstract}
+
+\maketitle
+% \section{Introduction}
+% On Bloom's Erd\H{o}s Problems website~\cite{TFB}, Problem~\#1045 asks the following:
+
+% \begin{prob}\label{prob:init}
+% Let $z_1,\dots,z_n\in\mathbb C$ with $|z_i-z_j|\le 2$ for all $i,j$, and
+% \[
+% \Delta(z_1,\dots,z_n)=\prod_{i\neq j}|z_i-z_j|.
+% \]
+% Maximise $\Delta$.
+% \end{prob}
+
+
+% \section{A uniform lower bound for even $n$}
+
+
+For $z_1,\dots,z_n\in\mathbb C$ define
+\[
+\Delta(z_1,\dots,z_n):=\prod_{i\neq j}|z_i-z_j|.
+\]
+Let
+\[
+\Delta_n^*:=\sup\Bigl\{\Delta(z_1,\dots,z_n):\ \max_{i,j}|z_i-z_j|\le2\Bigr\}.
+\]
+
+\begin{thm}\label{thm:main}
+Along even integers $n\to\infty$ one has
+\[
+\liminf_{\substack{n\to\infty\\ n\ \mathrm{even}}}\frac{\Delta_n^*}{n^n}
+ \ge
+\exp \left(\frac{7}{24}\zeta(3)-\frac{\pi^4}{864}\right)
+ > 1.26852.
+\]
+In fact, there is an explicit family of configurations (with diameter~$2$) for which the ratio
+$\Delta(z_1,\dots,z_n)/n^n$ converges to the constant on the right-hand side.
+\end{thm}
+
+\subsection{The triangular wave}
+Let $\mathrm{tri}:\mathbb R\to\mathbb R$ be the $2\pi$-periodic function defined by
+\[
+\mathrm{tri}(x):=1-\frac{2}{\pi}\arccos{(\cos{x})}.
+\]Equivalently, $\operatorname{tri}$ is the $2\pi$-periodic extension of the piecewise linear function on $[-\pi,\pi]$ given by
+\[
+\operatorname{tri}(x)=1-\frac{2}{\pi}|x| \qquad (x\in[-\pi,\pi]).
+\]Define \(g(\theta):=\mathrm{tri}(3\theta)\).
+
+\begin{lem}\label{lem:gprops}
+The function $g$ satisfies:
+\begin{enumerate}
+\item $|g(\theta)|\le 1$ for all $\theta$.
+\item $g$ is even: $g(-\theta)=g(\theta)$.
+\item $g$ is $\pi$-anti\-periodic: $g(\theta+\pi)=-g(\theta)$.
+\item $g$ is Lipschitz with constant $L:=6/\pi$, i.e.\ $|g(\theta)-g(\phi)|\le L|\theta-\phi|$.
+\end{enumerate}
+\end{lem}
+
+\begin{proof}
+Items (1) and (2) are immediate from the definition on $[-\pi,\pi]$.
+For (3), since $\mathrm{tri}(x+\pi)=-\mathrm{tri}(x)$ and $3(\theta+\pi)=3\theta+3\pi\equiv 3\theta+\pi\pmod{2\pi}$,
+we get $g(\theta+\pi)=\mathrm{tri}(3\theta+3\pi)=\mathrm{tri}(3\theta+\pi)=-\mathrm{tri}(3\theta)=-g(\theta)$.
+For (4), $\mathrm{tri}$ has slope $\pm 2/\pi$ on each linear piece, hence is $(2/\pi)$-Lipschitz.
+Composing with $3\theta$ multiplies the Lipschitz constant by~$3$, giving $L=6/\pi$.
+\end{proof}
+
+\subsection{The configuration for even $n$}
+Fix an even integer $n=2m$.
+Let
+\[
+\theta_k:=\frac{2\pi k}{n}\qquad (k=0,1,\dots,n-1),\qquad \zeta_k:=e^{i\theta_k}.
+\]
+Define the (small) parameter
+\[
+t_n:=\frac{\pi^2}{12n}\left(1-\frac{1}{n}\right),
+\]
+and the points
+\[
+z_k:=\bigl(1+t_n g(\theta_k)\bigr)\,\zeta_k,\qquad k=0,1,\dots,n-1.
+\]
+
+\subsection{Diameter bound: $|z_i-z_j|\le 2$ for large even $n$}
+
+\begin{lem}\label{lem:diameter}
+There exists $N_0$ such that for all even $n\ge N_0$ the configuration $\{z_k\}_{k=0}^{n-1}$ satisfies
+\[
+\max_{i,j}|z_i-z_j|\le 2.
+\]
+Moreover, for every $i$ we have $|z_i-z_{i+m}|=2$.
+\end{lem}
+
+\begin{proof}
+Write $r_k:=1+t_n g(\theta_k)$, so $z_k=r_k e^{i\theta_k}$.
+
+\medskip
+\noindent\textbf{Antipodal pairs.}
+Using $\zeta_{k+m}=-\zeta_k$ and Lemma~\ref{lem:gprops}(3), $g(\theta_{k+m})=-g(\theta_k)$, we get
+\[
+z_{k+m}=(1-t_n g(\theta_k))\,e^{i(\theta_k+\pi)}=-(1-t_n g(\theta_k))e^{i\theta_k},
+\]
+hence $z_k-z_{k+m}=2e^{i\theta_k}$ and therefore $|z_k-z_{k+m}|=2$.
+
+\medskip
+\noindent\textbf{General pairs.}
+Fix $i\neq j$ and set $\beta:=|\theta_i-\theta_j|\in(0,\pi]$ (take the smaller arc).
+Then
+\[
+|z_i-z_j|^2=r_i^2+r_j^2-2r_ir_j\cos\beta.
+\]
+
+\smallskip
+\noindent\emph{Case 1: $\beta\le \pi/2$.}
+Then $\cos\beta\ge0$, hence $|z_i-z_j|^2\le r_i^2+r_j^2\le 2(1+t_n)^2$.
+Since $t_n\le \pi^2/24<\sqrt2-1$, we have $2(1+t_n)^2<4$, so $|z_i-z_j|<2$.
+
+
+
+
+
+\smallskip
+\noindent\emph{Case 2: $\beta\in(\pi/2,\pi)$.}
+Write $\beta=\pi-\alpha$ where $\alpha\in(0,\pi/2)$.
+Then $\cos\beta=-\cos\alpha$ and
+\[
+|z_i-z_j|^2=r_i^2+r_j^2+2r_ir_j\cos\alpha.
+\]
+We may write
+\[
+\theta_j \equiv \theta_i+\pi-\varepsilon\alpha\pmod{2\pi}
+\quad\text{for some }\varepsilon\in\{\pm1\},
+\]
+with $\alpha=\tfrac{2\pi\ell}{n}$ for some integer $\ell\in\{1,2,\dots,\lfloor n/4\rfloor-1\}$.
+By Lemma~\ref{lem:gprops}(3),
+\[
+g(\theta_j)=g(\theta_i+\pi-\varepsilon\alpha)=-g(\theta_i-\varepsilon\alpha).
+\]
+Set
+\[
+a:=g(\theta_i),\qquad b:=g(\theta_i-\varepsilon\alpha).
+\]
+Then $r_i=1+t_n a$ and $r_j=1-t_n b$.
+A direct expansion gives
+\begin{align}
+|z_i-z_j|^2-4
+&= -4\sin^2\!\frac{\alpha}{2}
++2t_n(a-b)(1+\cos\alpha)
++t_n^2\Bigl[(a-b)^2+2(1-\cos\alpha)\,ab\Bigr].
+\label{eq:star}
+\end{align}
+We bound each term from above. By Lemma~\ref{lem:gprops}(4), $|a-b|\le L\alpha$ with $L=6/\pi$.
+Also $|ab|\le1$ and $1-\cos\alpha\le \alpha^2/2$, hence
+\[
+(a-b)^2+2(1-\cos\alpha)ab\le (L\alpha)^2+\alpha^2=(L^2+1)\alpha^2.
+\]
+Moreover, for all $\alpha\ge0$ one has $\sin x\ge x-x^3/6$; applying this with $x=\alpha/2$ yields
+$\sin^2(\alpha/2)\ge \alpha^2/4-\alpha^4/48$, hence
+\[
+-4\sin^2\frac{\alpha}{2}\le -\alpha^2+\frac{\alpha^4}{12}.
+\]
+Finally $1+\cos\alpha\le 2$, so $2t_n(a-b)(1+\cos\alpha)\le 4t_nL\alpha$.
+Putting these bounds into \eqref{eq:star} gives
+\begin{equation}\label{eq:hbound}
+|z_i-z_j|^2-4
+\le
+-\alpha^2+\frac{\alpha^4}{12}+4t_nL\alpha+(L^2+1)t_n^2\alpha^2.
+\end{equation}
+
+
+
+Now substitute $\alpha=\frac{2\pi\ell}{n}$ and $t_n=\frac{\pi^2}{12n}(1-\frac1n)$. We now show that the right-hand side of~\eqref{eq:hbound} is $\le 0$ for all even $n\ge 8$. Since $t_n\le \pi^2/(12n)$ and $L^2+1=(\pi^2+36)/\pi^2$, we obtain
+\[
+4t_nL\alpha
+=
+4\cdot \frac{\pi^2}{12n}\Bigl(1-\frac1n\Bigr)\cdot \frac{6}{\pi}\cdot \frac{2\pi\ell}{n}
+=
+\frac{4\pi^2\ell}{n^2}\Bigl(1-\frac1n\Bigr),
+\]
+\[
+\frac{\alpha^4}{12}
+=
+\frac{1}{12}\Bigl(\frac{2\pi\ell}{n}\Bigr)^4
+=
+\frac{4}{3}\frac{\pi^4\ell^4}{n^4},
+\]
+and
+\[
+(L^2+1)t_n^2\alpha^2
+\le
+\frac{\pi^2+36}{\pi^2}\cdot \frac{\pi^4}{144n^2}\cdot \Bigl(\frac{2\pi\ell}{n}\Bigr)^2
+=
+\frac{\pi^4(\pi^2+36)}{36}\cdot \frac{\ell^2}{n^4}.
+\]
+Moreover,
+\[
+-\alpha^2+4t_nL\alpha
+=
+-\Bigl(\frac{2\pi\ell}{n}\Bigr)^2+\frac{4\pi^2\ell}{n^2}\Bigl(1-\frac1n\Bigr)
+=
+-\frac{4\pi^2}{n^2}\Bigl(\ell(\ell-1)+\frac{\ell}{n}\Bigr).
+\]
+Therefore~\eqref{eq:hbound} implies the explicit bound
+\begin{equation}\label{eq:E-nl}
+|z_i-z_j|^2-4
+\le
+-\frac{4\pi^2}{n^2}\Bigl(\ell(\ell-1)+\frac{\ell}{n}\Bigr)
++\frac{\pi^4}{n^4}\Bigl(\frac{4}{3}\ell^4+\frac{\pi^2+36}{36}\ell^2\Bigr)
+=:E_{n,\ell}.
+\end{equation}
+
+We will check $E_{n,\ell}\le 0$ by cases.
+
+\smallskip
+\noindent\emph{Case 1: $\ell=1$.}
+Then \eqref{eq:E-nl} gives
+\[
+E_{n,1}
+\le -\frac{4\pi^2}{n^3}
++\frac{\pi^4}{n^4}\Bigl(\frac{7}{3}+\frac{\pi^2}{36}\Bigr).
+\]
+Thus $E_{n,1}\le 0$ follows as soon as \(n \ge \frac{\pi^2}{4}\left(\frac{7}{3}+\frac{\pi^2}{36}\right)\approx 6.43372\). Hence $E_{n,1}\le 0$ for all $n\ge 8$.
+
+\smallskip
+\noindent\emph{Case 2: $\ell\ge 2$.}
+Since $\ell(\ell-1)\ge \ell^2/2$ for $\ell\ge 2$, \eqref{eq:E-nl} yields
+\[
+E_{n,\ell}
+\le
+-\frac{2\pi^2\ell^2}{n^2}
++\frac{\pi^4}{n^4}\Bigl(\frac{4}{3}\ell^4+\frac{\pi^2+36}{36}\ell^2\Bigr)
+=
+\frac{\ell^2}{n^4}\Bigl(-2\pi^2 n^2+\pi^4\Bigl(\frac{4}{3}\ell^2+\frac{\pi^2+36}{36}\Bigr)\Bigr).
+\]
+Using $\ell\le n/4$ we have
+\[
+E_{n,\ell}
+\le
+\frac{\ell^2}{n^4}\Bigl(n^2\Bigl(-2\pi^2+\frac{\pi^4}{12}\Bigr)+\frac{\pi^4(\pi^2+36)}{36}\Bigr).
+\]
+For $n\ge 8$ we have
+\[
+n^2\Bigl(2-\frac{\pi^2}{12}\Bigr)\ \ge\ \frac{\pi^2(\pi^2+36)}{36},
+\]so indeed $E_{n,\ell}\le 0$ for all $\ell\ge 2$ whenever $n\ge 8$.
+
+\medskip
+Combining the two cases, we have $E_{n,\ell}\le 0$ for every $1\le \ell\le n/4$ once $n\ge 8$.
+Hence \eqref{eq:E-nl} implies $|z_i-z_j|^2-4\le 0$, i.e.\ $|z_i-z_j|\le 2$, for all near--antipodal pairs.
+\end{proof}
+
+
+
+
+
+\subsection{Factorization of $\Delta$ and a uniform bound on $\rho_{ij}$}
+
+
+
+For $i\neq j$ define
+\[
+v_k:=g(\theta_k)\zeta_k,\qquad
+\rho_{ij}:=\frac{v_i-v_j}{\zeta_i-\zeta_j}.
+\]
+Then
+\[
+z_i-z_j=(\zeta_i-\zeta_j)\bigl(1+t_n\rho_{ij}\bigr),
+\]
+and therefore
+\begin{equation}\label{eq:factor}
+\frac{\Delta(z_0,\dots,z_{n-1})}{\prod_{i\neq j}|\zeta_i-\zeta_j|}
+=
+\prod_{i\neq j}\bigl|1+t_n\rho_{ij}\bigr|.
+\end{equation}
+
+\begin{lem}\label{lem:rootsV}
+For $\zeta_k=e^{2\pi i k/n}$ one has
+\[
+\prod_{i\neq j}|\zeta_i-\zeta_j|=n^n.
+\]
+\end{lem}
+
+\begin{proof}
+Let $p(z)=z^n-1=\prod_{j=0}^{n-1}(z-\zeta_j)$. For each root $\zeta_i$,
+\[
+p'(\zeta_i)=n\zeta_i^{n-1}=\prod_{j\neq i}(\zeta_i-\zeta_j).
+\]
+Taking absolute values and then the product over $i$ gives
+\[
+\prod_{i}\prod_{j\neq i}|\zeta_i-\zeta_j|
+=\prod_i |p'(\zeta_i)|
+=\prod_i n = n^n.
+\qedhere\]
+\end{proof}
+
+Combining Lemma~\ref{lem:rootsV} with \eqref{eq:factor} yields
+\[
+\frac{\Delta(z_0,\dots,z_{n-1})}{n^n}
+=
+\prod_{i\neq j}\bigl|1+t_n\rho_{ij}\bigr|.
+\]
+
+
+\begin{lem}\label{lem:rhoBound}
+There is a constant $M$ independent of $n$ such that $|\rho_{ij}|\le M$ for all $i\neq j$.
+In fact one may take $M=4$.
+\end{lem}
+
+\begin{proof}
+Write $g_i:=g(\theta_i)$. Then
+\[
+v_i-v_j=g_i(\zeta_i-\zeta_j)+(g_i-g_j)\zeta_j,
+\]
+hence
+\[
+\rho_{ij}=g_i+(g_i-g_j)\frac{\zeta_j}{\zeta_i-\zeta_j}.
+\]
+Therefore
+\[
+|\rho_{ij}|
+\le |g_i|+\frac{|g_i-g_j|}{|\zeta_i-\zeta_j|}
+\le 1+\frac{L|\theta_i-\theta_j|}{2|\sin((\theta_i-\theta_j)/2)|}.
+\]
+For $0<x\le\pi$, concavity of $\sin$ on $[0,\pi/2]$ gives $\sin(x/2)\ge \frac{x}{\pi}$, hence
+\[
+\frac{x}{2\sin(x/2)}\le \frac{\pi}{2}.
+\]
+Thus $|\rho_{ij}|\le 1+\frac{L\pi}{2}=1+\frac{6}{\pi}\cdot\frac{\pi}{2}=4$.
+\end{proof}
+
+\subsection{Second-order expansion of $\log(\Delta/n^n)$}
+Taking logs,
+\begin{equation}\label{eq:logsum}
+\log\frac{\Delta(z_0,\dots,z_{n-1})}{n^n}
+=\sum_{i\neq j}\log\bigl|1+t_n\rho_{ij}\bigr|.
+\end{equation}
+
+\begin{lem}\label{lem:taylor}
+Assume $|u|\le 1/2$. Then
+\[
+\log|1+u|=\Re\!\left(u-\frac{u^2}{2}\right)+R(u),
+\qquad |R(u)|\le \frac{2}{3}|u|^3.
+\]
+\end{lem}
+
+\begin{proof}
+For $|u|<1$ we have $\log(1+u)=\sum_{k\ge1}(-1)^{k+1}u^k/k$.
+Taking real parts gives $\log|1+u|=\Re\log(1+u)$.
+The tail satisfies
+\[
+\left|\sum_{k\ge3}\frac{(-1)^{k+1}}{k}u^k\right|
+\le \sum_{k\ge3}\frac{|u|^k}{k}
+\le \frac{1}{3}\sum_{k\ge3}|u|^k
+=\frac{|u|^3}{3(1-|u|)}\le \frac{2}{3}|u|^3.
+\qedhere\]
+\end{proof}
+
+\begin{lem}\label{lem:linearCancel}
+Let $n=2m$ be even. Then $\sum_{i\neq j}\rho_{ij}=0$.
+\end{lem}
+
+\begin{proof}
+We have $\zeta_{k+m}=-\zeta_k$.
+By Lemma~\ref{lem:gprops}(3),
+$g(\theta_{k+m})=-g(\theta_k)$, hence
+\[
+v_{k+m}=g(\theta_{k+m})\zeta_{k+m}=(-g(\theta_k))(-\zeta_k)=v_k.
+\]
+Thus for any $i\neq j$,
+\[
+\rho_{i+m,\;j+m}=\frac{v_{i+m}-v_{j+m}}{\zeta_{i+m}-\zeta_{j+m}}
+=\frac{v_i-v_j}{-(\zeta_i-\zeta_j)}=-\rho_{ij}.
+\]
+The map $(i,j)\mapsto(i+m,j+m)$ is a bijection on ordered pairs $i\neq j$, so the sum cancels.
+\end{proof}
+
+\begin{lem}\label{lem:logAsym}
+Along even $n\to\infty$,
+\[
+\log\frac{\Delta(z_0,\dots,z_{n-1})}{n^n}
+=
+-\frac{t_n^2}{2}\sum_{i\neq j}\Re(\rho_{ij}^2)+o(1).
+\]
+\end{lem}
+
+\begin{proof}
+For all sufficiently large $n$, Lemma~\ref{lem:rhoBound} and $t_n\le \pi^2/(12n)$ imply
+$|t_n\rho_{ij}|\le 1/2$.
+Apply Lemma~\ref{lem:taylor} to \eqref{eq:logsum} termwise:
+\[
+\log\frac{\Delta}{n^n}
+=\sum_{i\neq j}\Re\!\left(t_n\rho_{ij}-\frac{t_n^2}{2}\rho_{ij}^2\right)
++\sum_{i\neq j}R(t_n\rho_{ij}).
+\]
+By Lemma~\ref{lem:linearCancel}, the linear term vanishes.
+For the remainder, using $|R(u)|\le \frac23|u|^3$ and $|\rho_{ij}|\le M$,
+\[
+\left|\sum_{i\neq j}R(t_n\rho_{ij})\right|
+\le \frac{2}{3}\,n(n-1)\,(t_n M)^3
+=O(n^2 t_n^3)=O(1/n)\to0.
+\qedhere\]
+\end{proof}
+
+
+\subsection{A Riemann-sum limit for $\sum\Re(\rho_{ij}^2)$}
+Define for $x,y\in[0,2\pi]$,
+\[
+\xi(x):=e^{ix},\qquad f(x):=g(x)e^{ix},\qquad
+\rho(x,y):=\frac{f(x)-f(y)}{\xi(x)-\xi(y)}\quad(x\neq y),
+\]
+and $F(x,y):=\Re(\rho(x,y)^2)$ for $x\neq y$, with $F(x,x):=0$.
+Then $\rho(\theta_i,\theta_j)=\rho_{ij}$.
+
+\begin{lem}\label{lem:Riemann}
+The function $F$ is bounded on $[0,2\pi]^2$ and is continuous off the diagonal $\{x=y\}$.
+Hence $F$ is Riemann integrable and
+\[
+\lim_{n\to\infty}\frac{1}{n^2}\sum_{i,j=0}^{n-1}F(\theta_i,\theta_j)
+=
+\frac{1}{4\pi^2}\int_0^{2\pi}\int_0^{2\pi}F(x,y)\,dx\,dy.
+\]
+Consequently,
+\[
+\lim_{n\to\infty}\frac{1}{n^2}\sum_{i\neq j}\Re(\rho_{ij}^2)
+=
+\frac{1}{4\pi^2}\int_0^{2\pi}\int_0^{2\pi}\Re(\rho(x,y)^2)\,dx\,dy
+=:\,J.
+\]
+\end{lem}
+
+\begin{proof}
+Boundedness follows from the same estimate as in Lemma~\ref{lem:rhoBound} (with $\theta_i-\theta_j$ replaced by $x-y$).
+Continuity holds for $x\neq y$ since the denominator is nonzero.
+The diagonal has measure~$0$, hence $F$ is Riemann integrable.
+For Riemann integrable functions, uniform-grid Riemann sums converge to the integral.
+Finally, adding/removing the diagonal terms changes the sum by at most $O(n)$, hence $o(n^2)$ after normalization.
+\end{proof}
+
+\subsection{Computing $J$ via Fej\'er approximation and Fourier orthogonality}
+
+\subsubsection{Fourier series of the triangular wave}
+\begin{lem}\label{lem:triFourier}
+The $2\pi$-periodic function $\mathrm{tri}$ has the Fourier expansion
+\[
+\mathrm{tri}(x)=\sum_{\substack{k\ge1\\ k\ \mathrm{odd}}}\frac{8}{\pi^2k^2}\cos(kx),
+\]
+with absolute (hence uniform) convergence.
+Consequently,
+\[
+g(\theta)=\mathrm{tri}(3\theta)
+=\sum_{\substack{r\ge1\\ r\ \mathrm{odd}}}\frac{8}{\pi^2r^2}\cos(3r\theta).
+\]
+\end{lem}
+
+\begin{proof}
+Since $\mathrm{tri}$ is even and has mean~$0$, only cosine coefficients appear:
+\[
+a_k=\frac{1}{\pi}\int_{-\pi}^{\pi}\mathrm{tri}(x)\cos(kx)\,dx
+=\frac{2}{\pi}\int_0^{\pi}\left(1-\frac{2x}{\pi}\right)\cos(kx)\,dx.
+\]
+The first term integrates to $0$. For the second term, integration by parts gives
+\[
+\int_0^\pi x\cos(kx)\,dx=\frac{(-1)^k-1}{k^2},
+\]
+hence
+\[
+a_k=\frac{4}{\pi^2}\cdot\frac{1-(-1)^k}{k^2}
+=
+\begin{cases}
+\frac{8}{\pi^2k^2},& k\ \text{odd},\\
+0,& k\ \text{even}.
+\end{cases}
+\]
+Absolute convergence follows from $\sum_{k\ \mathrm{odd}}1/k^2<\infty$.
+\end{proof}
+
+\subsubsection{A kernel orthogonality identity}
+For integers $k$ define, for $x\neq y$,
+\[
+R_k(x,y):=\frac{e^{ikx}-e^{iky}}{e^{ix}-e^{iy}}.
+\]
+
+\begin{lem}\label{lem:RkIntegral}
+For integers $k,\ell$ one has
+\[
+\frac{1}{4\pi^2}\int_0^{2\pi}\int_0^{2\pi} R_k(x,y)\,R_\ell(x,y)\,dx\,dy
+=
+\begin{cases}
+1-|k-1|,& k+\ell=2,\\
+0,& k+\ell\neq 2.
+\end{cases}
+\]
+\end{lem}
+
+\begin{proof}
+Let $z=e^{ix}$ and $w=e^{iy}$.
+If $k\ge1$ then
+\[
+R_k(x,y)=\frac{z^k-w^k}{z-w}=\sum_{m=0}^{k-1} z^{k-1-m}w^m
+=\sum_{m=0}^{k-1} e^{i((k-1-m)x+my)}.
+\]
+If $k\le0$ then, writing $k=-p$ with $p\ge0$,
+\[
+R_{-p}(x,y)=\frac{z^{-p}-w^{-p}}{z-w}
+=\frac{w^p-z^p}{z^p w^p(z-w)}
+=-\frac{z^p-w^p}{z^p w^p(z-w)}
+=-\sum_{m=0}^{p-1} z^{-(m+1)}w^{-(p-m)}.
+\]
+In all cases, $R_kR_\ell$ is a finite sum of exponentials $e^{i(ax+by)}$.
+Using
+\[
+\frac{1}{2\pi}\int_0^{2\pi} e^{iax}\,dx=
+\begin{cases}
+1,& a=0,\\
+0,& a\neq 0,
+\end{cases}
+\]
+one checks that a nonzero contribution can occur only when the total $x$-frequency and $y$-frequency both vanish,
+which forces $k+\ell=2$.
+When $k+\ell=2$, the number of surviving terms is $1-|k-1|$, and each contributes $1$.
+\end{proof}
+
+\subsubsection{Fej\'er approximation to justify passage to the Fourier side}
+
+Let $K_N$ be the \emph{Fej\'er kernel}
+\[
+K_N(t):=\frac{1}{N+1}\left(\frac{\sin((N+1)t/2)}{\sin(t/2)}\right)^2\ge0,
+\qquad \frac{1}{2\pi}\int_0^{2\pi}K_N(t)\,dt=1.
+\]
+Define the \emph{Fej\'er mean} of a $2\pi$-periodic continuous $f$ by
+\[
+f^{(N)}(x):=\frac{1}{2\pi}\int_0^{2\pi} f(x-t)\,K_N(t)\,dt.
+\]
+Then $f^{(N)}$ is a trigonometric polynomial of degree $\le N$ and $f^{(N)}\to f$ uniformly as $N\to\infty$.
+
+\begin{lem}\label{lem:FejerLip}
+If $f$ is Lipschitz with constant $\Lip(f)$, then $\Lip(f^{(N)})\le \Lip(f)$ for all $N$.
+Moreover, for all $x\neq y$,
+\[
+\left|\frac{f^{(N)}(x)-f^{(N)}(y)}{e^{ix}-e^{iy}}\right|
+\le \frac{\pi}{2}\,\Lip(f),
+\]
+uniformly in $N$.
+\end{lem}
+
+\begin{proof}
+Since $K_N$ is a probability kernel,
+\begin{align*}
+|f^{(N)}(x)-f^{(N)}(y)|
+&=\left|\frac{1}{2\pi}\int_0^{2\pi}\bigl(f(x-t)-f(y-t)\bigr)K_N(t)\,dt\right|\\
+&\le \frac{1}{2\pi}\int_0^{2\pi}\Lip(f)\,|x-y|\,K_N(t)\,dt
+=\Lip(f)\,|x-y|.
+\end{align*}
+Thus $\Lip(f^{(N)})\le \Lip(f)$.
+Also $|e^{ix}-e^{iy}|=2|\sin((x-y)/2)|$ and for $0<|x-y|\le \pi$ we have
+$\sin(|x-y|/2)\ge |x-y|/\pi$, hence
+$|x-y|/|e^{ix}-e^{iy}|\le \pi/2$.
+\end{proof}
+
+For our specific $f(x)=g(x)e^{ix}$, Lemma~\ref{lem:gprops} implies $|g|\le1$ and $\Lip(g)\le L$.
+Hence
+\[
+|f(x)-f(y)|
+\le |g(x)-g(y)|+|g(y)|\,|e^{ix}-e^{iy}|
+\le L|x-y|+|x-y|=(L+1)|x-y|,
+\]
+so $\Lip(f)\le L+1$.
+
+\begin{lem}\label{lem:JFourier}
+Let $\rho(x,y)=\frac{f(x)-f(y)}{e^{ix}-e^{iy}}$ as above and define
+\[
+B(f):=\frac{1}{4\pi^2}\int_0^{2\pi}\int_0^{2\pi}\rho(x,y)^2\,dx\,dy.
+\]
+Then $B(f)$ is real and equals
+\[
+B(f)=\sum_{k\in\mathbb Z}\bigl(1-|k-1|\bigr)\,a_k\,a_{2-k},
+\]
+where $f(x)=\sum_{k\in\mathbb Z} a_k e^{ikx}$ is the Fourier series of $f$.
+\end{lem}
+
+\begin{proof}
+Let $f^{(N)}$ be Fej\'er means. Define
+\[
+\rho_N(x,y):=\frac{f^{(N)}(x)-f^{(N)}(y)}{e^{ix}-e^{iy}}.
+\]
+By uniform convergence $f^{(N)}\to f$, we have $\rho_N(x,y)\to \rho(x,y)$ for every $x\neq y$.
+By Lemma~\ref{lem:FejerLip}, $|\rho_N(x,y)|\le \frac{\pi}{2}\Lip(f)$ uniformly in $N$ and $(x,y)$.
+Hence dominated convergence applies and
+\[
+B(f)=\lim_{N\to\infty}\frac{1}{4\pi^2}\iint \rho_N(x,y)^2\,dx\,dy.
+\]
+Now $f^{(N)}$ is a trigonometric polynomial, say
+$f^{(N)}(x)=\sum_{|k|\le N} a_k^{(N)} e^{ikx}$.
+Then for $x\neq y$,
+\[
+\rho_N(x,y)=\sum_{|k|\le N} a_k^{(N)}\,R_k(x,y),
+\]
+a finite sum. Therefore,
+\[
+\frac{1}{4\pi^2}\iint \rho_N(x,y)^2\,dx\,dy
+=\sum_{|k|,|\ell|\le N} a_k^{(N)}a_\ell^{(N)}
+\cdot \frac{1}{4\pi^2}\iint R_k R_\ell\,dx\,dy.
+\]
+By Lemma~\ref{lem:RkIntegral}, only terms with $k+\ell=2$ survive, giving
+\[
+\frac{1}{4\pi^2}\iint \rho_N(x,y)^2\,dx\,dy
+=\sum_{k\in\mathbb Z}\bigl(1-|k-1|\bigr)a_k^{(N)}a_{2-k}^{(N)}.
+\]
+For Fej\'er means, $a_k^{(N)}=(1-|k|/(N+1))a_k$ for $|k|\le N$ and $0$ otherwise, hence $a_k^{(N)}\to a_k$
+for each fixed $k$.
+In our application the resulting infinite series is absolutely convergent (indeed it will reduce to $\sum_{r\ \mathrm{odd}}O(1/r^3)$),
+so we may pass $N\to\infty$ termwise.
+This yields the desired series for $B(f)$.
+Since the series is real (coefficients are real in our case), $B(f)\in\mathbb R$.
+\end{proof}
+
+Finally, since $B(f)$ is real,
+\[
+J=\frac{1}{4\pi^2}\iint \Re(\rho^2)=\Re B(f)=B(f).
+\]
+
+\subsubsection{Evaluating the series for our $f$}
+By Lemma~\ref{lem:triFourier},
+\[
+g(\theta)=\sum_{\substack{r\ge1\\ r\ \mathrm{odd}}}\frac{8}{\pi^2r^2}\cos(3r\theta).
+\]
+Hence
+\[
+f(\theta)=g(\theta)e^{i\theta}
+=\sum_{\substack{r\ge1\\ r\ \mathrm{odd}}}\frac{4}{\pi^2r^2}\Bigl(e^{i(1+3r)\theta}+e^{i(1-3r)\theta}\Bigr).
+\]
+Therefore the Fourier coefficients of $f$ satisfy
+\[
+a_{1+3r}=a_{1-3r}=\frac{4}{\pi^2r^2}\quad (r\ge1,\ r\ \mathrm{odd}),
+\qquad a_k=0\ \text{otherwise}.
+\]
+In Lemma~\ref{lem:JFourier}, only pairs $(k,2-k)$ contribute.
+The only nonzero pairings are $k=1+3r$ with $2-k=1-3r$ (and vice versa), and for such $k$,
+$1-|k-1|=1-3r$.
+Thus
+\begin{align*}
+J
+&=\sum_{r\ \mathrm{odd}\ge1} 2(1-3r)\left(\frac{4}{\pi^2r^2}\right)^2
+=\frac{32}{\pi^4}\sum_{r\ \mathrm{odd}\ge1}\frac{1-3r}{r^4}.
+\end{align*}
+Using
+\[
+\sum_{r\ \mathrm{odd}}\frac1{r^4}=\left(1-\frac1{2^4}\right)\zeta(4)=\frac{15}{16}\cdot\frac{\pi^4}{90}=\frac{\pi^4}{96},
+\qquad
+\sum_{r\ \mathrm{odd}}\frac1{r^3}=\left(1-\frac1{2^3}\right)\zeta(3)=\frac{7}{8}\zeta(3),
+\]
+we obtain
+\[
+J=\frac{32}{\pi^4}\left(\frac{\pi^4}{96}-3\cdot\frac{7}{8}\zeta(3)\right)
+=\frac{1}{3}-\frac{84\,\zeta(3)}{\pi^4}.
+\]
+In particular $J<0$.
+
+\subsection{Asymptotic value of $\Delta/n^n$}
+By Lemma~\ref{lem:logAsym} and Lemma~\ref{lem:Riemann},
+\[
+\log\frac{\Delta(z_0,\dots,z_{n-1})}{n^n}
+=
+-\frac{t_n^2}{2}\Bigl(n^2J+o(n^2)\Bigr)+o(1)
+=
+-\frac{(nt_n)^2}{2}J+o(1).
+\]
+Since $nt_n\to \pi^2/12$,
+\[
+\lim_{\substack{n\to\infty\\ n\ \mathrm{even}}}
+\log\frac{\Delta(z_0,\dots,z_{n-1})}{n^n}
+=
+-\frac12\left(\frac{\pi^2}{12}\right)^2\left(\frac13-\frac{84\zeta(3)}{\pi^4}\right)
+=
+\frac{7}{24}\zeta(3)-\frac{\pi^4}{864}.
+\]
+Exponentiating,
+\[
+\lim_{\substack{n\to\infty\\ n\ \mathrm{even}}}
+\frac{\Delta(z_0,\dots,z_{n-1})}{n^n}
+=
+\exp\left(\frac{7}{24}\zeta(3)-\frac{\pi^4}{864}\right).
+\]By Lemma~\ref{lem:diameter}, for all sufficiently large even $n$ the configuration is feasible (diameter $\le2$),
+hence $\Delta_n^*\ge \Delta(z_0,\dots,z_{n-1})$ and therefore
+\[
+\liminf_{\substack{n\to\infty\\ n\ \mathrm{even}}}\frac{\Delta_n^*}{n^n}\ge \exp\left(\frac{7}{24}\zeta(3)-\frac{\pi^4}{864}\right).
+\]
+
+
+
+
+
+
+
+% \begin{thebibliography}{99}
+
+% \bibitem{TFB}
+% T. F. Bloom, Erd\H{o}s Problem \#1045, \url{https://www.erdosproblems.com/1045}, accessed 2025-10-03
+
+% % \bibitem{DIK-Annals}
+% % P.~Deift, A.~Its, and I.~Krasovsky,
+% % \newblock Asymptotics of Toeplitz, Hankel, and Toeplitz+Hankel determinants with Fisher–Hartwig singularities,
+% % \newblock \emph{Annals of Mathematics} \textbf{174} (2011), 1243--1299.
+
+% % \bibitem{DIK-MSRIP}
+% % P.~Deift, A.~Its, and I.~Krasovsky,
+% % \newblock On the asymptotics of a Toeplitz determinant with singularities,
+% % \newblock in \emph{Recent Advances in Orthogonal Polynomials, Special Functions, and Their Applications}, MSRI Publications \textbf{65} (2014), 93--146; also arXiv:1206.1292.
+
+% \bibitem{NocedalWright2006} J.~Nocedal and S.~J.~Wright, \textit{Numerical Optimization}, 2nd ed., Springer, New York, 2006.
+% \end{thebibliography}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
+
