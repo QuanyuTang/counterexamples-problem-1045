@@ -147,6 +147,7 @@
 % \section{A uniform lower bound for even $n$}
 
 
+
 For $z_1,\dots,z_n\in\mathbb C$ define
 \[
 \Delta(z_1,\dots,z_n):=\prod_{i\neq j}|z_i-z_j|.
@@ -156,17 +157,18 @@ Let
 \Delta_n^*:=\sup\Bigl\{\Delta(z_1,\dots,z_n):\ \max_{i,j}|z_i-z_j|\le2\Bigr\}.
 \]
 
-\begin{thm}\label{thm:main}
+\begin{thm}\label{thm:main_unifom_even_n_1}
 Along even integers $n\to\infty$ one has
 \[
 \liminf_{\substack{n\to\infty\\ n\ \mathrm{even}}}\frac{\Delta_n^*}{n^n}
  \ge
 \exp \left(\frac{7}{24}\zeta(3)-\frac{\pi^4}{864}\right)
- > 1.26852.
+ \approx 1.26853.
 \]
-In fact, there is an explicit family of configurations (with diameter~$2$) for which the ratio
-$\Delta(z_1,\dots,z_n)/n^n$ converges to the constant on the right-hand side.
 \end{thm}
+% In fact, there is an explicit family of configurations (with diameter~$2$) for which the ratio
+% $\Delta(z_1,\dots,z_n)/n^n$ converges to the constant on the right-hand side.
+
 
 \subsection{The triangular wave}
 Let $\mathrm{tri}:\mathbb R\to\mathbb R$ be the $2\pi$-periodic function defined by
@@ -175,45 +177,79 @@ Let $\mathrm{tri}:\mathbb R\to\mathbb R$ be the $2\pi$-periodic function defined
 \]Equivalently, $\operatorname{tri}$ is the $2\pi$-periodic extension of the piecewise linear function on $[-\pi,\pi]$ given by
 \[
 \operatorname{tri}(x)=1-\frac{2}{\pi}|x| \qquad (x\in[-\pi,\pi]).
-\]Define \(g(\theta):=\mathrm{tri}(3\theta)\).
+\]Define \(g(\theta):=\mathrm{tri}(3\theta)\). For $x,y\in\mathbb R$ define the circular distance
+\[
+d(x,y):=\min_{k\in\mathbb Z}|x-y-2\pi k|\in[0,\pi].
+\]
+
+
+% The next lemma is immediate.
+
+% \begin{lem}\label{lem:gprops}
+% The function $g$ satisfies:
+% \begin{enumerate}
+% \item $|g(\theta)|\le 1$ for all $\theta$.
+% \item $g$ is even: $g(-\theta)=g(\theta)$.
+% \item $g$ is $\pi$-anti\-periodic: $g(\theta+\pi)=-g(\theta)$.
+% \item $|g(\theta)-g(\phi)|\le L \cdot d(\theta,\phi)$, where $L:= \frac{6}{\pi}$. [But in this case $\theta-\phi$ may not in $[0, 2\pi]$]
+% \end{enumerate}
+% \end{lem}
 
 \begin{lem}\label{lem:gprops}
-The function $g$ satisfies:
+The function $g(\theta):=\mathrm{tri}(3\theta)$ satisfies:
 \begin{enumerate}
-\item $|g(\theta)|\le 1$ for all $\theta$.
+\item $|g(\theta)|\le 1$ for all $\theta\in\mathbb R$.
 \item $g$ is even: $g(-\theta)=g(\theta)$.
-\item $g$ is $\pi$-anti\-periodic: $g(\theta+\pi)=-g(\theta)$.
-\item $g$ is Lipschitz with constant $L:=6/\pi$, i.e.\ $|g(\theta)-g(\phi)|\le L|\theta-\phi|$.
+\item $g$ is $\pi$-antiperiodic: $g(\theta+\pi)=-g(\theta)$.
+\item $g$ is Lipschitz on the circle: for all $\theta,\phi\in\mathbb R$,
+\[
+|g(\theta)-g(\phi)|\le L\, d(\theta,\phi),
+\qquad L:=\frac{6}{\pi}.
+\]
 \end{enumerate}
 \end{lem}
 
 \begin{proof}
-Items (1) and (2) are immediate from the definition on $[-\pi,\pi]$.
-For (3), since $\mathrm{tri}(x+\pi)=-\mathrm{tri}(x)$ and $3(\theta+\pi)=3\theta+3\pi\equiv 3\theta+\pi\pmod{2\pi}$,
-we get $g(\theta+\pi)=\mathrm{tri}(3\theta+3\pi)=\mathrm{tri}(3\theta+\pi)=-\mathrm{tri}(3\theta)=-g(\theta)$.
-For (4), $\mathrm{tri}$ has slope $\pm 2/\pi$ on each linear piece, hence is $(2/\pi)$-Lipschitz.
-Composing with $3\theta$ multiplies the Lipschitz constant by~$3$, giving $L=6/\pi$.
+Items (1)--(3) are immediate from the definition of $\mathrm{tri}$.
+
+For (4), note that $\mathrm{tri}$ is the $2\pi$-periodic extension of the piecewise linear function
+$1-\frac{2}{\pi}|x|$ on $[-\pi,\pi]$, hence $\mathrm{tri}$ is globally Lipschitz on $\mathbb R$ with
+constant $2/\pi$. Therefore $g(\theta)=\mathrm{tri}(3\theta)$ is globally Lipschitz on $\mathbb R$
+(with respect to the usual distance) with constant $3\cdot(2/\pi)=6/\pi$:
+\[
+|g(u)-g(v)|\le \frac{6}{\pi}|u-v|\qquad (u,v\in\mathbb R).
+\]
+Now fix $\theta,\phi\in\mathbb R$ and choose $k\in\mathbb Z$ such that
+$|\theta-(\phi+2\pi k)|=d(\theta,\phi)$. Using $2\pi$-periodicity of $g$,
+\[
+|g(\theta)-g(\phi)|=|g(\theta)-g(\phi+2\pi k)|
+\le \frac{6}{\pi}\,|\theta-(\phi+2\pi k)|
+=\frac{6}{\pi}\,d(\theta,\phi).
+\qedhere\]
 \end{proof}
 
-\subsection{The configuration for even $n$}
+
+
+
+\subsection{The configuration for even $n$}\label{sec:even_n_conf_v1}
 Fix an even integer $n=2m$.
 Let
 \[
 \theta_k:=\frac{2\pi k}{n}\qquad (k=0,1,\dots,n-1),\qquad \zeta_k:=e^{i\theta_k}.
 \]
-Define the (small) parameter
+Define the parameter
 \[
 t_n:=\frac{\pi^2}{12n}\left(1-\frac{1}{n}\right),
 \]
 and the points
 \[
-z_k:=\bigl(1+t_n g(\theta_k)\bigr)\,\zeta_k,\qquad k=0,1,\dots,n-1.
+z_k:=\left(1+t_n g(\theta_k)\right) \zeta_k,\qquad k=0,1,\dots,n-1.
 \]
 
-\subsection{Diameter bound: $|z_i-z_j|\le 2$ for large even $n$}
+\subsection{Diameter bound}
 
 \begin{lem}\label{lem:diameter}
-There exists $N_0$ such that for all even $n\ge N_0$ the configuration $\{z_k\}_{k=0}^{n-1}$ satisfies
+There exists $N_0$ such that for all even $n=2m\ge N_0$ the configuration $\{z_k\}_{k=0}^{n-1}$ in Section~\ref{sec:even_n_conf_v1} satisfies
 \[
 \max_{i,j}|z_i-z_j|\le 2.
 \]
@@ -227,14 +263,13 @@ Write $r_k:=1+t_n g(\theta_k)$, so $z_k=r_k e^{i\theta_k}$.
 \noindent\textbf{Antipodal pairs.}
 Using $\zeta_{k+m}=-\zeta_k$ and Lemma~\ref{lem:gprops}(3), $g(\theta_{k+m})=-g(\theta_k)$, we get
 \[
-z_{k+m}=(1-t_n g(\theta_k))\,e^{i(\theta_k+\pi)}=-(1-t_n g(\theta_k))e^{i\theta_k},
+z_{k+m}=(1-t_n g(\theta_k)) e^{i(\theta_k+\pi)}=-(1-t_n g(\theta_k))e^{i\theta_k},
 \]
 hence $z_k-z_{k+m}=2e^{i\theta_k}$ and therefore $|z_k-z_{k+m}|=2$.
 
 \medskip
 \noindent\textbf{General pairs.}
-Fix $i\neq j$ and set $\beta:=|\theta_i-\theta_j|\in(0,\pi]$ (take the smaller arc).
-Then
+Fix $i\neq j$ and set $\beta:=d(\theta_i,\theta_j)\in(0,\pi)$. Then
 \[
 |z_i-z_j|^2=r_i^2+r_j^2-2r_ir_j\cos\beta.
 \]
@@ -255,22 +290,17 @@ Then $\cos\beta=-\cos\alpha$ and
 \[
 |z_i-z_j|^2=r_i^2+r_j^2+2r_ir_j\cos\alpha.
 \]
-We may write
+We may write 
 \[
 \theta_j \equiv \theta_i+\pi-\varepsilon\alpha\pmod{2\pi}
 \quad\text{for some }\varepsilon\in\{\pm1\},
 \]
-with $\alpha=\tfrac{2\pi\ell}{n}$ for some integer $\ell\in\{1,2,\dots,\lfloor n/4\rfloor-1\}$.
+with $\alpha=\tfrac{2\pi\ell}{n}$ for some integer $\ell\in\{1,2,\dots,\lfloor (n-1)/4\rfloor\}$.
 By Lemma~\ref{lem:gprops}(3),
 \[
 g(\theta_j)=g(\theta_i+\pi-\varepsilon\alpha)=-g(\theta_i-\varepsilon\alpha).
 \]
-Set
-\[
-a:=g(\theta_i),\qquad b:=g(\theta_i-\varepsilon\alpha).
-\]
-Then $r_i=1+t_n a$ and $r_j=1-t_n b$.
-A direct expansion gives
+Set \(a:=g(\theta_i),\qquad b:=g(\theta_i-\varepsilon\alpha)\). Then $r_i=1+t_n a$ and $r_j=1-t_n b$. A direct expansion gives
 \begin{align}
 |z_i-z_j|^2-4
 &= -4\sin^2\!\frac{\alpha}{2}
@@ -283,11 +313,7 @@ Also $|ab|\le1$ and $1-\cos\alpha\le \alpha^2/2$, hence
 \[
 (a-b)^2+2(1-\cos\alpha)ab\le (L\alpha)^2+\alpha^2=(L^2+1)\alpha^2.
 \]
-Moreover, for all $\alpha\ge0$ one has $\sin x\ge x-x^3/6$; applying this with $x=\alpha/2$ yields
-$\sin^2(\alpha/2)\ge \alpha^2/4-\alpha^4/48$, hence
-\[
--4\sin^2\frac{\alpha}{2}\le -\alpha^2+\frac{\alpha^4}{12}.
-\]
+Moreover, for all $\alpha\ge0$ one has $-4\sin^2\frac{\alpha}{2}\le -\alpha^2+\frac{\alpha^4}{12}$.
 Finally $1+\cos\alpha\le 2$, so $2t_n(a-b)(1+\cos\alpha)\le 4t_nL\alpha$.
 Putting these bounds into \eqref{eq:star} gives
 \begin{equation}\label{eq:hbound}
@@ -298,28 +324,13 @@ Putting these bounds into \eqref{eq:star} gives
 
 
 
-Now substitute $\alpha=\frac{2\pi\ell}{n}$ and $t_n=\frac{\pi^2}{12n}(1-\frac1n)$. We now show that the right-hand side of~\eqref{eq:hbound} is $\le 0$ for all even $n\ge 8$. Since $t_n\le \pi^2/(12n)$ and $L^2+1=(\pi^2+36)/\pi^2$, we obtain
-\[
-4t_nL\alpha
-=
-4\cdot \frac{\pi^2}{12n}\Bigl(1-\frac1n\Bigr)\cdot \frac{6}{\pi}\cdot \frac{2\pi\ell}{n}
-=
-\frac{4\pi^2\ell}{n^2}\Bigl(1-\frac1n\Bigr),
-\]
-\[
-\frac{\alpha^4}{12}
-=
-\frac{1}{12}\Bigl(\frac{2\pi\ell}{n}\Bigr)^4
-=
-\frac{4}{3}\frac{\pi^4\ell^4}{n^4},
-\]
-and
+Now substitute $\alpha=\frac{2\pi\ell}{n}$ and $t_n=\frac{\pi^2}{12n}(1-\frac1n)$. We now show that the right-hand side of~\eqref{eq:hbound} is $\le 0$ for all even $n\ge 8$. Since $t_n\le \pi^2/(12n)$ and $L^2+1=(\pi^2+36)/\pi^2$, we obtain $$4t_nL\alpha = \frac{4\pi^2\ell}{n^2}\Bigl(1-\frac1n\Bigr), \qquad \frac{\alpha^4}{12} = \frac{4}{3}\frac{\pi^4\ell^4}{n^4}$$ and
 \[
 (L^2+1)t_n^2\alpha^2
 \le
 \frac{\pi^2+36}{\pi^2}\cdot \frac{\pi^4}{144n^2}\cdot \Bigl(\frac{2\pi\ell}{n}\Bigr)^2
 =
-\frac{\pi^4(\pi^2+36)}{36}\cdot \frac{\ell^2}{n^4}.
+\frac{\pi^4(\pi^2+36)}{36} \frac{\ell^2}{n^4}.
 \]
 Moreover,
 \[
@@ -367,14 +378,11 @@ E_{n,\ell}
 \le
 \frac{\ell^2}{n^4}\Bigl(n^2\Bigl(-2\pi^2+\frac{\pi^4}{12}\Bigr)+\frac{\pi^4(\pi^2+36)}{36}\Bigr).
 \]
-For $n\ge 8$ we have
-\[
-n^2\Bigl(2-\frac{\pi^2}{12}\Bigr)\ \ge\ \frac{\pi^2(\pi^2+36)}{36},
-\]so indeed $E_{n,\ell}\le 0$ for all $\ell\ge 2$ whenever $n\ge 8$.
+For $n\ge 8$ we have $n^2 (2- \pi^2/12) \ge \pi^2(\pi^2+36)/36$, so indeed $E_{n,\ell}\le 0$ for all $\ell\ge 2$ whenever $n\ge 8$.
 
 \medskip
 Combining the two cases, we have $E_{n,\ell}\le 0$ for every $1\le \ell\le n/4$ once $n\ge 8$.
-Hence \eqref{eq:E-nl} implies $|z_i-z_j|^2-4\le 0$, i.e.\ $|z_i-z_j|\le 2$, for all near--antipodal pairs.
+Hence \eqref{eq:E-nl} implies $|z_i-z_j|^2-4\le 0$, i.e.\ $|z_i-z_j|\le 2$.
 \end{proof}
 
 
@@ -389,12 +397,7 @@ For $i\neq j$ define
 \[
 v_k:=g(\theta_k)\zeta_k,\qquad
 \rho_{ij}:=\frac{v_i-v_j}{\zeta_i-\zeta_j}.
-\]
-Then
-\[
-z_i-z_j=(\zeta_i-\zeta_j)\bigl(1+t_n\rho_{ij}\bigr),
-\]
-and therefore
+\] Then \(z_i-z_j=(\zeta_i-\zeta_j)\bigl(1+t_n\rho_{ij}\bigr)\), and therefore
 \begin{equation}\label{eq:factor}
 \frac{\Delta(z_0,\dots,z_{n-1})}{\prod_{i\neq j}|\zeta_i-\zeta_j|}
 =
@@ -402,18 +405,11 @@ and therefore
 \end{equation}
 
 \begin{lem}\label{lem:rootsV}
-For $\zeta_k=e^{2\pi i k/n}$ one has
-\[
-\prod_{i\neq j}|\zeta_i-\zeta_j|=n^n.
-\]
+For $\zeta_k=e^{2\pi i k/n}$ one has \(\prod_{i\neq j}|\zeta_i-\zeta_j|=n^n\).
 \end{lem}
 
 \begin{proof}
-Let $p(z)=z^n-1=\prod_{j=0}^{n-1}(z-\zeta_j)$. For each root $\zeta_i$,
-\[
-p'(\zeta_i)=n\zeta_i^{n-1}=\prod_{j\neq i}(\zeta_i-\zeta_j).
-\]
-Taking absolute values and then the product over $i$ gives
+Let $p(z)=z^n-1=\prod_{j=0}^{n-1}(z-\zeta_j)$. For each root $\zeta_i$, \(p'(\zeta_i)=n\zeta_i^{n-1}=\prod_{j\neq i}(\zeta_i-\zeta_j)\). Taking absolute values and then the product over $i$ gives
 \[
 \prod_{i}\prod_{j\neq i}|\zeta_i-\zeta_j|
 =\prod_i |p'(\zeta_i)|
@@ -422,51 +418,54 @@ Taking absolute values and then the product over $i$ gives
 \end{proof}
 
 Combining Lemma~\ref{lem:rootsV} with \eqref{eq:factor} yields
-\[
+\begin{equation}\label{comb_lem_ro_fa_yi_1}
 \frac{\Delta(z_0,\dots,z_{n-1})}{n^n}
 =
 \prod_{i\neq j}\bigl|1+t_n\rho_{ij}\bigr|.
-\]
+\end{equation}
 
 
 \begin{lem}\label{lem:rhoBound}
-There is a constant $M$ independent of $n$ such that $|\rho_{ij}|\le M$ for all $i\neq j$.
-In fact one may take $M=4$.
+For all $i\neq j$, we have $|\rho_{ij}|\le 4$.
+
 \end{lem}
 
 \begin{proof}
-Write $g_i:=g(\theta_i)$. Then
-\[
-v_i-v_j=g_i(\zeta_i-\zeta_j)+(g_i-g_j)\zeta_j,
-\]
-hence
+Write $g_i:=g(\theta_i)$. Then \(v_i-v_j=g_i(\zeta_i-\zeta_j)+(g_i-g_j)\zeta_j\), hence
 \[
 \rho_{ij}=g_i+(g_i-g_j)\frac{\zeta_j}{\zeta_i-\zeta_j}.
-\]
-Therefore
+\]Let $\delta_{ij}:= d(\theta_i,\theta_j)\in(0,\pi]$.
+Since $g$ is $2\pi$-periodic, $|g_i-g_j|\le L\delta_{ij}$ and
+$|\zeta_i-\zeta_j|=2\sin(\delta_{ij}/2)$. Therefore
 \[
 |\rho_{ij}|
 \le |g_i|+\frac{|g_i-g_j|}{|\zeta_i-\zeta_j|}
-\le 1+\frac{L|\theta_i-\theta_j|}{2|\sin((\theta_i-\theta_j)/2)|}.
+\le 1+\frac{L\delta_{ij}}{2|\sin(\delta_{ij}/2)|}.
 \]
-For $0<x\le\pi$, concavity of $\sin$ on $[0,\pi/2]$ gives $\sin(x/2)\ge \frac{x}{\pi}$, hence
-\[
-\frac{x}{2\sin(x/2)}\le \frac{\pi}{2}.
-\]
-Thus $|\rho_{ij}|\le 1+\frac{L\pi}{2}=1+\frac{6}{\pi}\cdot\frac{\pi}{2}=4$.
+
+
+
+
+
+
+For $0<x\le\pi$, concavity of $\sin$ on $[0,\pi/2]$ gives $\sin(x/2)\ge \frac{x}{\pi}$, hence $|\rho_{ij}|\le 1+\frac{L\pi}{2}=1+\frac{6}{\pi}\cdot\frac{\pi}{2}=4$.
 \end{proof}
 
 \subsection{Second-order expansion of $\log(\Delta/n^n)$}
-Taking logs,
+Taking logarithms on both sides of~\eqref{comb_lem_ro_fa_yi_1}, we obtain
 \begin{equation}\label{eq:logsum}
 \log\frac{\Delta(z_0,\dots,z_{n-1})}{n^n}
 =\sum_{i\neq j}\log\bigl|1+t_n\rho_{ij}\bigr|.
 \end{equation}
 
+Let \( \Re z \) denote the real part of a complex number $z$.
+
+
+
 \begin{lem}\label{lem:taylor}
 Assume $|u|\le 1/2$. Then
 \[
-\log|1+u|=\Re\!\left(u-\frac{u^2}{2}\right)+R(u),
+\log|1+u|=\Re \left(u-\frac{u^2}{2}\right)+R(u),
 \qquad |R(u)|\le \frac{2}{3}|u|^3.
 \]
 \end{lem}
@@ -530,18 +529,59 @@ For the remainder, using $|R(u)|\le \frac23|u|^3$ and $|\rho_{ij}|\le M$,
 \end{proof}
 
 
+% \subsection{A Riemann-sum limit for $\sum\Re(\rho_{ij}^2)$}
+% Define for $x,y\in[0,2\pi]$,
+% \begin{equation}\label{eq:def_riemann_sum_limit_for_ss_1}
+% \xi(x):=e^{ix},\qquad f(x):=g(x)e^{ix},\qquad
+% \rho(x,y):=\frac{f(x)-f(y)}{\xi(x)-\xi(y)}\quad(d(x,y)>0),
+% \end{equation}
+% and $F(x,y):=\Re(\rho(x,y)^2)$ for $x\neq y$, with $F(x,x):=0$.
+% Clearly, $\rho(\theta_i,\theta_j)=\rho_{ij}$.
+
+% \begin{lem}\label{lem:Riemann}
+% The function $F$ is bounded on $[0,2\pi]^2$ and is continuous off the diagonal $\{x=y\}$.
+% Hence $F$ is Riemann integrable and
+% \[
+% \lim_{n\to\infty}\frac{1}{n^2}\sum_{i,j=0}^{n-1}F(\theta_i,\theta_j)
+% =
+% \frac{1}{4\pi^2}\int_0^{2\pi}\int_0^{2\pi}F(x,y)\,dx\,dy.
+% \]
+% Consequently,
+% \[
+% \lim_{n\to\infty}\frac{1}{n^2}\sum_{i\neq j}\Re(\rho_{ij}^2)
+% =
+% \frac{1}{4\pi^2}\int_0^{2\pi}\int_0^{2\pi}\Re(\rho(x,y)^2)\,dx\,dy
+% =:\,J.
+% \]
+% \end{lem}
+
+
+
 \subsection{A Riemann-sum limit for $\sum\Re(\rho_{ij}^2)$}
-Define for $x,y\in[0,2\pi]$,
-\[
+Define
+\begin{equation}\label{eq:def_riemann_sum_limit_for_ss_1}
 \xi(x):=e^{ix},\qquad f(x):=g(x)e^{ix},\qquad
-\rho(x,y):=\frac{f(x)-f(y)}{\xi(x)-\xi(y)}\quad(x\neq y),
+\rho(x,y):=
+\begin{cases}
+\dfrac{f(x)-f(y)}{\xi(x)-\xi(y)},& d(x,y)>0,\\[1.2ex]
+0,& d(x,y)=0,
+\end{cases}
+\end{equation}
+and set
+\[
+F(x,y):=\Re(\rho(x,y)^2)\qquad (x,y\in[0,2\pi]).
 \]
-and $F(x,y):=\Re(\rho(x,y)^2)$ for $x\neq y$, with $F(x,x):=0$.
-Then $\rho(\theta_i,\theta_j)=\rho_{ij}$.
+For $i\neq j$ we have $d(\theta_i,\theta_j)>0$, hence $\rho(\theta_i,\theta_j)=\rho_{ij}$ and
+$F(\theta_i,\theta_j)=\Re(\rho_{ij}^2)$.
+
+
+
+
+
 
 \begin{lem}\label{lem:Riemann}
-The function $F$ is bounded on $[0,2\pi]^2$ and is continuous off the diagonal $\{x=y\}$.
-Hence $F$ is Riemann integrable and
+The function $F$ is bounded on $[0,2\pi]^2$ and is continuous at every point $(x,y)$ with $d(x,y)>0$.
+In particular, $F$ is Riemann integrable on $[0,2\pi]^2$, and
 \[
 \lim_{n\to\infty}\frac{1}{n^2}\sum_{i,j=0}^{n-1}F(\theta_i,\theta_j)
 =
@@ -556,13 +596,92 @@ Consequently,
 \]
 \end{lem}
 
+
 \begin{proof}
 Boundedness follows from the same estimate as in Lemma~\ref{lem:rhoBound} (with $\theta_i-\theta_j$ replaced by $x-y$).
-Continuity holds for $x\neq y$ since the denominator is nonzero.
-The diagonal has measure~$0$, hence $F$ is Riemann integrable.
-For Riemann integrable functions, uniform-grid Riemann sums converge to the integral.
-Finally, adding/removing the diagonal terms changes the sum by at most $O(n)$, hence $o(n^2)$ after normalization.
+Continuity holds for $d(x,y)>0$ since the denominator is nonzero.
+Let
+\[
+D:=\{(x,y)\in[0,2\pi]^2:\ d(x,y)=0\}=\{(x,y)\in[0,2\pi]^2:\ e^{ix}=e^{iy}\}.
+\]
+On $[0,2\pi]^2$ one has $D=\{x=y\}\cup\{(0,2\pi),(2\pi,0)\}$, hence $D$ has Lebesgue measure $0$ and $F$ is Riemann integrable.
+Let $h:=2\pi/n$ and $\theta_i:=ih$ for $i=0,1,\dots,n-1$. Consider the uniform partition of $[0,2\pi]^2$
+into $n^2$ squares of side $h$ and choose the sample point $(\theta_i,\theta_j)$ in the $(i,j)$th square.
+Since $F$ is Riemann integrable, these Riemann sums converge:
+\[
+\lim_{n\to\infty} h^2\sum_{i,j=0}^{n-1}F(\theta_i,\theta_j)
+=\int_0^{2\pi}\int_0^{2\pi}F(x,y)\,dx\,dy.
+\]
+Dividing by $(2\pi)^2$ gives
+\[
+\lim_{n\to\infty}\frac{1}{n^2}\sum_{i,j=0}^{n-1}F(\theta_i,\theta_j)
+=
+\frac{1}{4\pi^2}\int_0^{2\pi}\int_0^{2\pi}F(x,y)\,dx\,dy.
+\]
+
+Finally, since $F(\theta_i,\theta_i)=0$ for all $i$ by definition, we have
+$\sum_{i,j}F(\theta_i,\theta_j)=\sum_{i\neq j}F(\theta_i,\theta_j)$, and for $i\neq j$,
+$F(\theta_i,\theta_j)=\Re(\rho_{ij}^2)$. This yields the stated consequence and the definition of $J$.
 \end{proof}
+
+
+% \begin{proof}
+% \textbf{Boundedness.}
+% Since $f$ is Lipschitz on the circle, we have
+% \[
+% |f(x)-f(y)|\le \Lip(f)\,d(x,y)\qquad(x,y\in\mathbb R),
+% \]
+% where $\Lip(f):=\sup_{d(u,v)>0}\frac{|f(u)-f(v)|}{d(u,v)}<\infty$.
+% If $d(x,y)>0$, then $|e^{ix}-e^{iy}|=2\sin(d(x,y)/2)\ge 2d(x,y)/\pi$, hence
+% \[
+% |\rho(x,y)|\le \Lip(f)\,\frac{d(x,y)}{2\sin(d(x,y)/2)}\le \frac{\pi}{2}\Lip(f).
+% \]
+% Therefore $|F(x,y)|\le \frac{\pi^2}{4}\Lip(f)^2$ when $d(x,y)>0$, while $F(x,y)=0$ when $d(x,y)=0$ by definition.
+% Thus $F$ is bounded on $[0,2\pi]^2$.
+
+% \textbf{Continuity off $\{d=0\}$.}
+% On the set $\{(x,y):d(x,y)>0\}$ the denominator $e^{ix}-e^{iy}$ is nonzero, and both
+% $f$ and $e^{ix}$ are continuous; hence $\rho$ (and therefore $F$) is continuous there.
+
+% \textbf{Riemann integrability.}
+% Let
+% \[
+% D:=\{(x,y)\in[0,2\pi]^2:\ d(x,y)=0\}=\{(x,y)\in[0,2\pi]^2:\ e^{ix}=e^{iy}\}.
+% \]
+% On $[0,2\pi]^2$ one has $D=\{x=y\}\cup\{(0,2\pi),(2\pi,0)\}$, hence $D$ has Lebesgue measure $0$.
+% Thus the set of discontinuities of $F$ is contained in $D$ and has measure $0$; by Lebesgue's criterion,
+% $F$ is Riemann integrable on $[0,2\pi]^2$.
+
+% \textbf{Convergence of uniform-grid Riemann sums.}
+% Let $h:=2\pi/n$ and $\theta_i:=ih$ for $i=0,1,\dots,n-1$. Consider the uniform partition of $[0,2\pi]^2$
+% into $n^2$ squares of side $h$ and choose the sample point $(\theta_i,\theta_j)$ in the $(i,j)$th square.
+% Since $F$ is Riemann integrable, these Riemann sums converge:
+% \[
+% \lim_{n\to\infty} h^2\sum_{i,j=0}^{n-1}F(\theta_i,\theta_j)
+% =\int_0^{2\pi}\int_0^{2\pi}F(x,y)\,dx\,dy.
+% \]
+% Dividing by $(2\pi)^2$ gives
+% \[
+% \lim_{n\to\infty}\frac{1}{n^2}\sum_{i,j=0}^{n-1}F(\theta_i,\theta_j)
+% =
+% \frac{1}{4\pi^2}\int_0^{2\pi}\int_0^{2\pi}F(x,y)\,dx\,dy.
+% \]
+
+% Finally, since $F(\theta_i,\theta_i)=0$ for all $i$ by definition, we have
+% $\sum_{i,j}F(\theta_i,\theta_j)=\sum_{i\neq j}F(\theta_i,\theta_j)$, and for $i\neq j$,
+% $F(\theta_i,\theta_j)=\Re(\rho_{ij}^2)$. This yields the stated consequence and the definition of $J$.
+% \end{proof}
+
+
+
+
+
+
+
+
+
+
+
 
 \subsection{Computing $J$ via Fej\'er approximation and Fourier orthogonality}
 
@@ -655,15 +774,18 @@ Let $K_N$ be the \emph{Fej\'er kernel}
 K_N(t):=\frac{1}{N+1}\left(\frac{\sin((N+1)t/2)}{\sin(t/2)}\right)^2\ge0,
 \qquad \frac{1}{2\pi}\int_0^{2\pi}K_N(t)\,dt=1.
 \]
-Define the \emph{Fej\'er mean} of a $2\pi$-periodic continuous $f$ by
+Define the \emph{Fej\'er mean} of a $2\pi$-periodic continuous function $f$ by
 \[
 f^{(N)}(x):=\frac{1}{2\pi}\int_0^{2\pi} f(x-t)\,K_N(t)\,dt.
 \]
 Then $f^{(N)}$ is a trigonometric polynomial of degree $\le N$ and $f^{(N)}\to f$ uniformly as $N\to\infty$.
 
 \begin{lem}\label{lem:FejerLip}
-If $f$ is Lipschitz with constant $\Lip(f)$, then $\Lip(f^{(N)})\le \Lip(f)$ for all $N$.
-Moreover, for all $x\neq y$,
+Let $f:\mathbb R\to\mathbb C$ be $2\pi$--periodic and Lipschitz. Write
+\[
+\Lip(f):=\sup_{d(x,y)>0}\frac{|f(x)-f(y)|}{d(x,y)}.
+\] then $\Lip(f^{(N)})\le \Lip(f)$ for all $N$.
+Moreover, for all $x,y\in\mathbb R$ with $d(x,y)>0$,
 \[
 \left|\frac{f^{(N)}(x)-f^{(N)}(y)}{e^{ix}-e^{iy}}\right|
 \le \frac{\pi}{2}\,\Lip(f),
@@ -671,31 +793,53 @@ Moreover, for all $x\neq y$,
 uniformly in $N$.
 \end{lem}
 
+% \begin{proof}
+% Since $K_N$ is a probability kernel,
+% \begin{align*}
+% |f^{(N)}(x)-f^{(N)}(y)|
+% &=\left|\frac{1}{2\pi}\int_0^{2\pi}\bigl(f(x-t)-f(y-t)\bigr)K_N(t)\,dt\right|\\
+% &\le \frac{1}{2\pi}\int_0^{2\pi}\Lip(f)\,d(x,y)\,K_N(t)\,dt
+% =\Lip(f)\,d(x,y).
+% \end{align*}
+% Thus $\Lip(f^{(N)})\le \Lip(f)$.
+% Also $|e^{ix}-e^{iy}|=2\sin(d(x,y)/2)\ge 2 d(x,y)/\pi$, this completes the proof.
+% \end{proof}
+
 \begin{proof}
-Since $K_N$ is a probability kernel,
+Since $K_N$ is a probability kernel, and $d(x-t,y-t)=d(x,y)$ for all $t$,
 \begin{align*}
 |f^{(N)}(x)-f^{(N)}(y)|
 &=\left|\frac{1}{2\pi}\int_0^{2\pi}\bigl(f(x-t)-f(y-t)\bigr)K_N(t)\,dt\right|\\
-&\le \frac{1}{2\pi}\int_0^{2\pi}\Lip(f)\,|x-y|\,K_N(t)\,dt
-=\Lip(f)\,|x-y|.
+&\le \frac{1}{2\pi}\int_0^{2\pi}|f(x-t)-f(y-t)|\,K_N(t)\,dt\\
+&\le \frac{1}{2\pi}\int_0^{2\pi}\Lip(f)\,d(x-t,y-t)\,K_N(t)\,dt\\
+&=\Lip(f)\,d(x,y).
 \end{align*}
 Thus $\Lip(f^{(N)})\le \Lip(f)$.
-Also $|e^{ix}-e^{iy}|=2|\sin((x-y)/2)|$ and for $0<|x-y|\le \pi$ we have
-$\sin(|x-y|/2)\ge |x-y|/\pi$, hence
-$|x-y|/|e^{ix}-e^{iy}|\le \pi/2$.
+
+If $d(x,y)>0$, then $|e^{ix}-e^{iy}|=2\sin(d(x,y)/2)\ge 2d(x,y)/\pi$,
+and hence
+\[
+\left|\frac{f^{(N)}(x)-f^{(N)}(y)}{e^{ix}-e^{iy}}\right|
+\le \Lip(f)\,\frac{d(x,y)}{2\sin(d(x,y)/2)}
+\le \frac{\pi}{2}\Lip(f).
+\qedhere\]
 \end{proof}
 
-For our specific $f(x)=g(x)e^{ix}$, Lemma~\ref{lem:gprops} implies $|g|\le1$ and $\Lip(g)\le L$.
-Hence
-\[
-|f(x)-f(y)|
-\le |g(x)-g(y)|+|g(y)|\,|e^{ix}-e^{iy}|
-\le L|x-y|+|x-y|=(L+1)|x-y|,
-\]
-so $\Lip(f)\le L+1$.
+
+% For our specific $f(x)=g(x)e^{ix}$, Lemma~\ref{lem:gprops} implies $|g|\le1$ and $\Lip(g)\le L$.
+% Hence
+% \[
+% |f(x)-f(y)|
+% \le |g(x)-g(y)|+|g(y)|\,|e^{ix}-e^{iy}|
+% \le L|x-y|+|x-y|=(L+1)|x-y|,
+% \]
+% so $\Lip(f)\le L+1$.
+
+
+
 
 \begin{lem}\label{lem:JFourier}
-Let $\rho(x,y)=\frac{f(x)-f(y)}{e^{ix}-e^{iy}}$ as above and define
+Let $\rho(x,y)=\frac{f(x)-f(y)}{e^{ix}-e^{iy}}$ as in~\eqref{eq:def_riemann_sum_limit_for_ss_1} and define
 \[
 B(f):=\frac{1}{4\pi^2}\int_0^{2\pi}\int_0^{2\pi}\rho(x,y)^2\,dx\,dy.
 \]
@@ -711,11 +855,18 @@ Let $f^{(N)}$ be Fej\'er means. Define
 \[
 \rho_N(x,y):=\frac{f^{(N)}(x)-f^{(N)}(y)}{e^{ix}-e^{iy}}.
 \]
-By uniform convergence $f^{(N)}\to f$, we have $\rho_N(x,y)\to \rho(x,y)$ for every $x\neq y$.
-By Lemma~\ref{lem:FejerLip}, $|\rho_N(x,y)|\le \frac{\pi}{2}\Lip(f)$ uniformly in $N$ and $(x,y)$.
+By uniform convergence $f^{(N)}\to f$, we have $\rho_N(x,y)\to \rho(x,y)$ for every $x\neq y$. For our specific $f(x)=g(x)e^{ix}$, Lemma~\ref{lem:gprops} implies $|g|\le1$ and $\Lip(g)\le L$.
+Hence, for all $x,y\in\mathbb R$,
+\[
+|f(x)-f(y)|
+\le |g(x)-g(y)|+|g(y)|\,|e^{ix}-e^{iy}|
+\le L\,d(x,y)+2\sin(d(x,y)/2)
+\le (L+1)\,d(x,y),
+\]
+so $\Lip(f)\le L+1$. By Lemma~\ref{lem:FejerLip}, $|\rho_N(x,y)|\le \frac{\pi}{2}\Lip(f)$ uniformly in $N$ and $(x,y)$.
 Hence dominated convergence applies and
 \[
-B(f)=\lim_{N\to\infty}\frac{1}{4\pi^2}\iint \rho_N(x,y)^2\,dx\,dy.
+B(f)=\lim_{N\to\infty}\frac{1}{4\pi^2}\int_0^{2\pi}\int_0^{2\pi} \rho_N(x,y)^2\,dx\,dy.
 \]
 Now $f^{(N)}$ is a trigonometric polynomial, say
 $f^{(N)}(x)=\sum_{|k|\le N} a_k^{(N)} e^{ikx}$.
@@ -725,13 +876,13 @@ Then for $x\neq y$,
 \]
 a finite sum. Therefore,
 \[
-\frac{1}{4\pi^2}\iint \rho_N(x,y)^2\,dx\,dy
+\frac{1}{4\pi^2}\int_0^{2\pi}\int_0^{2\pi} \rho_N(x,y)^2\,dx\,dy
 =\sum_{|k|,|\ell|\le N} a_k^{(N)}a_\ell^{(N)}
-\cdot \frac{1}{4\pi^2}\iint R_k R_\ell\,dx\,dy.
+\cdot \frac{1}{4\pi^2}\int_0^{2\pi}\int_0^{2\pi} R_k R_\ell\,dx\,dy.
 \]
 By Lemma~\ref{lem:RkIntegral}, only terms with $k+\ell=2$ survive, giving
 \[
-\frac{1}{4\pi^2}\iint \rho_N(x,y)^2\,dx\,dy
+\frac{1}{4\pi^2}\int_0^{2\pi}\int_0^{2\pi} \rho_N(x,y)^2\,dx\,dy
 =\sum_{k\in\mathbb Z}\bigl(1-|k-1|\bigr)a_k^{(N)}a_{2-k}^{(N)}.
 \]
 For Fej\'er means, $a_k^{(N)}=(1-|k|/(N+1))a_k$ for $|k|\le N$ and $0$ otherwise, hence $a_k^{(N)}\to a_k$
@@ -744,7 +895,7 @@ Since the series is real (coefficients are real in our case), $B(f)\in\mathbb R$
 
 Finally, since $B(f)$ is real,
 \[
-J=\frac{1}{4\pi^2}\iint \Re(\rho^2)=\Re B(f)=B(f).
+J=\frac{1}{4\pi^2}\int_0^{2\pi}\int_0^{2\pi} \Re(\rho^2)=\Re B(f)=B(f).
 \]
 
 \subsubsection{Evaluating the series for our $f$}
